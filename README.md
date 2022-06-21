@@ -36,3 +36,11 @@ To upgrade the my-release deployment:
 ```console
 helm update my-release raajev/tiny-vnf
 ```
+## Provides Following functions
+* PVC based volume
+* Configmap based volume
+* Secret based volume
+* Secondary Network
+* Role & Role-binding
+* Statefulset & Deployment
+* Service & Headless Service
