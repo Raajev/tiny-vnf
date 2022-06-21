@@ -2,6 +2,15 @@
 
 * Installs a small vnf with web services.
 
+## Provides Following functions
+* PVC based volume
+* Configmap based volume
+* Secret based volume
+* Secondary Network
+* Role & Role-binding
+* Statefulset & Deployment
+* Service & Headless Service
+
 ## Get Repo Info
 
 ```console
@@ -16,7 +25,7 @@ _See [helm repo](https://helm.sh/docs/helm/helm_repo/) for command documentation
 To install the chart with the release name `my-release`:
 
 ```console
-helm install my-release raajev/tiny-vnf
+helm install my-release tiny-vnf/tiny-vnf
 ```
 
 ## Uninstalling the Chart
@@ -34,13 +43,6 @@ The command removes all the Kubernetes components associated with the chart and 
 To upgrade the my-release deployment:
 
 ```console
-helm update my-release raajev/tiny-vnf
+helm upgrade my-release tiny-vnf/tiny-vnf
 ```
-## Provides Following functions
-* PVC based volume
-* Configmap based volume
-* Secret based volume
-* Secondary Network
-* Role & Role-binding
-* Statefulset & Deployment
-* Service & Headless Service
+
