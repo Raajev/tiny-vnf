@@ -8,26 +8,41 @@ spec:
   config: '{
       "cniVersion": "0.3.1",
       "type": {{ .Values.secondaryNet.type | quote }},
-      "mode": "bridge",
+      "mode": {{ .Values.secondaryNet.mode | default "bridge" | quote }},
       "master": {{ .Values.secondaryNet.master | quote }},
       "ipam": {
-        "type": {{ .Values.secondaryNet.ipamType | quote }},
-        "gateway": {{ .Values.secondaryNet.gateway | quote }},
         {{ if contains "whereabouts" .Values.secondaryNet.ipamType   }}
         "range": {{ .Values.secondaryNet.subnet | quote }},
+           {{ if  .Values.secondaryNet.gateway   }}
         "exclude": ["{{ .Values.secondaryNet.gateway }}/32"],
+           {{ end }}
+           {{ if  .Values.secondaryNet.rangeStart   }}
         "range_start": {{ .Values.secondaryNet.rangeStart | quote }},
-        "range_end": {{ .Values.secondaryNet.rangeEnd | quote }}
+           {{ end }}
+           {{ if  .Values.secondaryNet.rangeEnd   }}
+        "range_end": {{ .Values.secondaryNet.rangeEnd | quote }},
+           {{ end }}
         {{ else if contains "host-local" .Values.secondaryNet.ipamType }}
         "subnet": {{ .Values.secondaryNet.subnet | quote }},
+           {{ if  .Values.secondaryNet.rangeStart   }}
         "rangeStart": {{ .Values.secondaryNet.rangeStart | quote }},
-        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }}
+           {{ end }}
+           {{ if  .Values.secondaryNet.rangeEnd   }}
+        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }},
+           {{ end }}
         {{ else }}
         "subnet": {{ .Values.secondaryNet.subnet | quote }},
+           {{ if  .Values.secondaryNet.rangeStart   }}
         "rangeStart": {{ .Values.secondaryNet.rangeStart | quote }},
-        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }}
+           {{ end }}
+           {{ if  .Values.secondaryNet.rangeEnd   }}
+        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }},
+           {{ end }}
         {{ end }}
+           {{ if  .Values.secondaryNet.gateway   }}
+        "gateway": {{ .Values.secondaryNet.gateway | quote }},
+           {{ end }}
+        "type": {{ .Values.secondaryNet.ipamType | quote }}
       }
     }'
 {{- end }}
-

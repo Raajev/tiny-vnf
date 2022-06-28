@@ -5,10 +5,12 @@
 replicaCount: 1
 
 image:
+#  registry: 
   repository: raajeevb/rbtiny
+  tag: "1"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1"
+
 
 imagePullSecrets: []
 nameOverride: ""
@@ -45,8 +47,8 @@ headlessService: false
 
 persistence:
 ## Can choose pvc or statefulset
-  type: pvc
   enabled: true
+  type: pvc
   # storageClassName: default
   accessModes:
     - ReadWriteOnce
@@ -64,15 +66,16 @@ admin:
   passwordKey: admin-password
 
 secondaryNet:
-  enabled: true
+  enabled: false
   type: macvlan
   master: eth3
   ipamType: host-local
 ## Can choose host-local or whereabouts
-  subnet: 10.65.180.64/27
-  rangeStart: 10.65.180.73
-  rangeEnd: 10.65.180.74
-  gateway: 10.65.180.65
+  subnet: 10.10.10.0/24
+#  gateway: 10.10.10.1
+#  rangeStart: 10.10.10.10
+#  rangeEnd: 10.10.10.100
+#  mode: bridge
 
 ingress:
   enabled: false
@@ -108,7 +111,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: 
+nodeSelector:
   type:  pool1
 
 tolerations: []
