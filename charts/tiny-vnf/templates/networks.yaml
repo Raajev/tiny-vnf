@@ -15,7 +15,9 @@ spec:
         "gateway": {{ .Values.secondaryNet.gateway | quote }},
         {{ if contains "whereabouts" .Values.secondaryNet.ipamType   }}
         "range": {{ .Values.secondaryNet.subnet | quote }},
-        "exclude": ["{{ .Values.secondaryNet.gateway }}/32"]
+        "exclude": ["{{ .Values.secondaryNet.gateway }}/32"],
+        "range_start": {{ .Values.secondaryNet.rangeStart | quote }},
+        "range_end": {{ .Values.secondaryNet.rangeEnd | quote }}
         {{ else if contains "host-local" .Values.secondaryNet.ipamType }}
         "subnet": {{ .Values.secondaryNet.subnet | quote }},
         "rangeStart": {{ .Values.secondaryNet.rangeStart | quote }},
@@ -28,3 +30,4 @@ spec:
       }
     }'
 {{- end }}
+
