@@ -15,10 +15,10 @@ spec:
       {{- include "tiny-vnf.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations: 
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+    {{- if .Values.secondaryNet.enabled }}
+      annotations:
+        k8s.v1.cni.cncf.io/networks: {{ include "tiny-vnf.fullname" . }}-nad
+    {{- end }}
       labels:
         {{- include "tiny-vnf.selectorLabels" . | nindent 8 }}
     spec:
@@ -55,19 +55,19 @@ spec:
           - name: config
             mountPath: "/var/www"
           - name: secret
-            mountPath: "/tmp/secret"            
+            mountPath: "/tmp/secret"
       volumes:
       - name: pvc-tiny
         persistentVolumeClaim:
           claimName: {{ tpl (.Values.persistence.existingClaim | default (include "tiny-vnf.fullname" .)) . }}
       - name: config
         configMap:
-          name: {{ template "tiny-vnf.fullname" . }}          
+          name: {{ template "tiny-vnf.fullname" . }}
       - name: secret
         secret:
-          secretName: {{ template "tiny-vnf.fullname" . }}              
-          
-          
+          secretName: {{ template "tiny-vnf.fullname" . }}
+
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

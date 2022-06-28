@@ -2,20 +2,29 @@
 apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
-  name: nad-tiny-vnf
+  name: {{ include "tiny-vnf.fullname" . }}-nad
   namespace: {{ template "tiny-vnf.namespace" . }}
 spec:
   config: '{
       "cniVersion": "0.3.1",
       "type": {{ .Values.secondaryNet.type | quote }},
-      "mode": "private",
+      "mode": "bridge",
       "master": {{ .Values.secondaryNet.master | quote }},
       "ipam": {
         "type": {{ .Values.secondaryNet.ipamType | quote }},
+        "gateway": {{ .Values.secondaryNet.gateway | quote }},
+        {{ if contains "whereabouts" .Values.secondaryNet.ipamType   }}
+        "range": {{ .Values.secondaryNet.subnet | quote }},
+        "exclude": ["{{ .Values.secondaryNet.gateway }}/32"]
+        {{ else if contains "host-local" .Values.secondaryNet.ipamType }}
         "subnet": {{ .Values.secondaryNet.subnet | quote }},
         "rangeStart": {{ .Values.secondaryNet.rangeStart | quote }},
-        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }},
-        "gateway": {{ .Values.secondaryNet.gateway | quote }}
+        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }}
+        {{ else }}
+        "subnet": {{ .Values.secondaryNet.subnet | quote }},
+        "rangeStart": {{ .Values.secondaryNet.rangeStart | quote }},
+        "rangeEnd": {{ .Values.secondaryNet.rangeEnd | quote }}
+        {{ end }}
       }
     }'
 {{- end }}

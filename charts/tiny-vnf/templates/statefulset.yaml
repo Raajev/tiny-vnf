@@ -18,10 +18,10 @@ spec:
   serviceName: {{ template "tiny-vnf.fullname" . }}-headless
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+    {{- if .Values.secondaryNet.enabled }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        k8s.v1.cni.cncf.io/networks: {{ include "tiny-vnf.fullname" . }}-nad
+    {{- end }}
       labels:
         {{- include "tiny-vnf.selectorLabels" . | nindent 8 }}
     spec:
@@ -88,4 +88,3 @@ spec:
 {{ toYaml . | indent 10 }}
       {{- end }}
 {{- end }}
-
