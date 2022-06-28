@@ -63,7 +63,6 @@ admin:
   userKey: admin-user
   passwordKey: admin-password
 
-
 secondaryNet:
   enabled: true
   type: macvlan
