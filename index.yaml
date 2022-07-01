@@ -3,6 +3,20 @@ entries:
   tiny-vnf:
   - apiVersion: v1
     appVersion: "1.0"
+    created: "2022-07-01T18:26:23.139701405Z"
+    description: A Helm chart for Tiny-VNF application to be deployed on Kubernetes
+    digest: f34e5db5da34268035c55c5b2a1bcdb605d1a0966fe9471b37c67bbc355df027
+    home: https://github.com/Raajev/tiny-vnf
+    icon: https://repository-images.githubusercontent.com/505937631/4debf3a8-a747-4555-ba5c-2b6c72c7a1ec
+    name: tiny-vnf
+    sources:
+    - https:https://raajev.github.io/tiny-vnf/
+    type: application
+    urls:
+    - https://github.com/Raajev/tiny-vnf/releases/download/tiny-vnf-0.5.0/tiny-vnf-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v1
+    appVersion: "1.0"
     created: "2022-06-28T17:35:28.164675615Z"
     description: A Helm chart for Tiny-VNF application to be deployed on Kubernetes
     digest: a0463f84ceedae914d646bfe1bed6de0546f8d183f55af581dbca19fb42956a0
