@@ -13,12 +13,19 @@ spec:
   selector:
     matchLabels:
       {{- include "tiny-vnf.selectorLabels" . | nindent 6 }}
+  {{- if eq .Values.updateStrategy "Recreate" }}
+  strategy:
+    type: Recreate
+  {{- end}}
   template:
     metadata:
-    {{- if .Values.secondaryNet.enabled }}
       annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if .Values.secondaryNet.enabled }}
         k8s.v1.cni.cncf.io/networks: {{ include "tiny-vnf.fullname" . }}-nad
-    {{- end }}
+        {{- end }}
       labels:
         {{- include "tiny-vnf.selectorLabels" . | nindent 8 }}
     spec:

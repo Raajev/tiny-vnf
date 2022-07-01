@@ -5,11 +5,11 @@
 replicaCount: 1
 
 image:
-#  registry: 
+#  registry:
   repository: raajeevb/rbtiny
   tag: "1"
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # Overrides the image tag whose default is "latest".
 
 
 imagePullSecrets: []
@@ -25,6 +25,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -67,11 +68,12 @@ admin:
 
 secondaryNet:
   enabled: false
-  type: macvlan
-  master: eth3
-  ipamType: host-local
+#  cniVersion: 0.3.1
+#  type: macvlan
+#  master: eth3
+#  ipamType: host-local
 ## Can choose host-local or whereabouts
-  subnet: 10.10.10.0/24
+#  subnet: 10.10.10.0/24
 #  gateway: 10.10.10.1
 #  rangeStart: 10.10.10.10
 #  rangeEnd: 10.10.10.100
@@ -117,3 +119,4 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
+updateStrategy: Recreate
