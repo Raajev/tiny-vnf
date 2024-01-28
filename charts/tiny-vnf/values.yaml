@@ -114,7 +114,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
-  type:  pool1
+  type:  null
 
 tolerations: []
 
